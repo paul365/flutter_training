@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sec2_assignment/message.dart';
-import 'package:flutter_sec2_assignment/text-control.dart';
+import 'package:flutter_sec2_assignment/text_control.dart';
 
 void main() => runApp(const MyApp());
 
