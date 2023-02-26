@@ -1,2 +1,2 @@
 # flutter_training
-This repository contains the files and project that I used for training Flutter
+This repository contains the files and projects that I used for training Flutter
