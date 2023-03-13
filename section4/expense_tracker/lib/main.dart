@@ -106,30 +106,52 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [headerButton],
           )) as PreferredSizeWidget;
 
+    Widget noTransaction() {
+      return SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'No transactions yet',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+                height: 200,
+                child: Image.asset(
+                  'assets/images/waiting.png',
+                  fit: BoxFit.cover,
+                ))
+          ],
+        ),
+      );
+    }
+
+    Widget cuppertinoLayout(body) {
+      return CupertinoPageScaffold(
+        navigationBar: (appBar as ObstructingPreferredSizeWidget),
+        child: body,
+      );
+    }
+
+    Widget materialLayout(body) {
+      return Scaffold(
+        appBar: appBar,
+        body: body,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _startAddNewTransaction(context),
+          child: const Icon(Icons.add),
+        ),
+      );
+    }
+
     final body = SafeArea(
         child: _transactions.isEmpty
-            ? SizedBox(
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'No transactions yet',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                        height: 200,
-                        child: Image.asset(
-                          'assets/images/waiting.png',
-                          fit: BoxFit.cover,
-                        ))
-                  ],
-                ),
-              )
+            ? noTransaction()
             : Column(children: [
                 SizedBox(
                     height: (mediaQuery.size.height -
@@ -145,18 +167,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: TransactionList(_transactions, _deleteTransaction))
               ]));
 
-    return isIOS
-        ? CupertinoPageScaffold(
-            navigationBar: (appBar as ObstructingPreferredSizeWidget),
-            child: body,
-          )
-        : Scaffold(
-            appBar: appBar,
-            body: body,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () => _startAddNewTransaction(context),
-              child: const Icon(Icons.add),
-            ),
-          );
+    return isIOS ? cuppertinoLayout(body) : materialLayout(body);
   }
 }
