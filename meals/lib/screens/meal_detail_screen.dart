@@ -45,12 +45,15 @@ class MealDetailScreen extends StatelessWidget {
         appBar: AppBar(title: Text(meal.title)),
         body: SingleChildScrollView(
           child: Column(children: [
-            SizedBox(
-              height: 300,
-              width: double.infinity,
-              child: Image.network(
-                meal.imageUrl,
-                fit: BoxFit.cover,
+            Hero(
+              tag: meal.id,
+              child: SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  meal.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             sectionHeader(context, 'Ingredients'),
@@ -89,7 +92,23 @@ class MealDetailScreen extends StatelessWidget {
           ]),
         ),
         floatingActionButton: FloatingActionButton(
-            child: Icon(isMealFavorite(id) ? Icons.star : Icons.star_border),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (child, animation) => RotationTransition(
+                turns: Tween(
+                  begin: 0.9,
+                  end: 1.0,
+                ).animate(CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeInCirc,
+                )),
+                child: child,
+              ),
+              child: Icon(
+                isMealFavorite(id) ? Icons.star : Icons.star_border,
+                key: ValueKey(isMealFavorite(id)),
+              ),
+            ),
             onPressed: () {
               // Navigator.of(context).pop(id);
               toggleFavorite(id);

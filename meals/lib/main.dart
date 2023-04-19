@@ -9,7 +9,7 @@ import 'package:meals/screens/meal_detail_screen.dart';
 import 'package:meals/screens/tabs_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
